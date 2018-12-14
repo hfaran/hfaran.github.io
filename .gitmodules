@@ -1,0 +1,6 @@
+[submodule "hfaranOnHugo/themes/ananke"]
+	path = hfaranOnHugo/themes/ananke
+	url = https://github.com/budparr/gohugo-theme-ananke.git
+[submodule "hfaran.github.io/themes/ananke"]
+	path = hfaran.github.io/themes/ananke
+	url = https://github.com/budparr/gohugo-theme-ananke.git
