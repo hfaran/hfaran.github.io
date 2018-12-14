@@ -1,9 +1,0 @@
-baseURL = "https://hfaran.github.io/"
-languageCode = "en-us"
-title = "Hamza Faran ツ"
-theme = "ananke"
-
-[params]
-    show_reading_time = true
-    github = "https://github.com/hfaran"
-    background_color_class = "bg-black"
