@@ -1,5 +1,5 @@
 
-![](/content/images/2016/02/piazza_instacode.png)
+![](piazza_instacode.png)
 
 <h1></h1>
 <h1>Motivation</h1>
@@ -9,7 +9,7 @@ I wrote <code>piazza-api</code> a while ago when it was just essentially a more 
 <h1>Capturing API Calls</h1>
 There are several ways that I could go about doing this. I could inspect the client code for API calls. I could use Chrome Dev Tools. Or I could use Fiddler (not because it's any better than CDT, it's just another option). I will be using a bit of both here. If you want to skip the Fiddler setup, simply press <em>F12</em> and open the <em>Network</em> tab if you're using Chrome.
 <h2>Meet <a href="http://www.telerik.com/fiddler" target="_blank">Fiddler</a></h2>
-![Fiddler In a Nutshell](/content/images/2016/02/fiddler_diag.png)
+![Fiddler In a Nutshell](fiddler_diag.png)
 *Fiddler In a Nutshell*
 
 Fiddler is a proxy that captures all HTTP(S) requests and responses going in and out of your system. It's a great tool for web debugging (and in this case, reverse-engineering private APIs). There are several alternatives, such as Charles, however, Fiddler is free (and manages to be excellent at the same time). Anyways, enough praise; the point I'm trying to make is that a tool like Fiddler makes this dead easy.
@@ -20,7 +20,7 @@ Piazza uses HTTPS (as it rightfully should). To be a useful middleman, Fiddler n
 <h3>Filter Through Relevant Captures</h3>
 By default, Fiddler will log all sessions from everything and everywhere. Since we don't particularly care about, well, any traffic other than Piazza, <a href="http://stackoverflow.com/questions/4098877/filter-fiddler-traffic" target="_blank">let's filter only it through</a>.
 
-![Filtering through only traffic to piazza.com with 'api' in the URL seems reasonable](/content/images/2016/02/fiddler_filter.png)
+![Filtering through only traffic to piazza.com with 'api' in the URL seems reasonable](fiddler_filter.png)
 *Filtering through only traffic to piazza.com with 'api' in the URL seems reasonable*
 
 <h2>Generating Captures</h2>
@@ -28,39 +28,39 @@ At this point, we can head on over to Piazza and just start clicking around to s
 
 The following is a capture from several clicks around the interface.
 
-![](/content/images/2016/02/fiddler_ex.png)
+![](fiddler_ex.png)
 
 Let's break these down and map by action:
 
-![Logging in from home page, and forwarded to my last viewed class page](/content/images/2016/02/10_92.png)
+![Logging in from home page, and forwarded to my last viewed class page](10_92.png)
 *Logging in from home page, and forwarded to my last viewed class page*
 
 
-![Clicking on a post](/content/images/2016/02/99.png)
+![Clicking on a post](99.png)
 *Clicking on a post*
 
 
-![Clicking on "Updated", i.e., filtering feed to show only what is unread by the user](/content/images/2016/02/105.png)
+![Clicking on "Updated", i.e., filtering feed to show only what is unread by the user](105.png)
 *Clicking on "Updated", i.e., filtering feed to show only what is unread by the user*
 
 
-![Clicking on "Following", i.e., filtering through only posts that I am following](/content/images/2016/02/114.png)
+![Clicking on "Following", i.e., filtering through only posts that I am following](114.png)
 *Clicking on "Following", i.e., filtering through only posts that I am following*
 
 
-![Clicking on a folder](/content/images/2016/02/120.png)
+![Clicking on a folder](120.png)
 *Clicking on a folder*
 
 
-![Clicking on a post again; 128 is getting users that participated on the post, it seems](/content/images/2016/02/128.png)
+![Clicking on a post again; 128 is getting users that participated on the post, it seems](128.png)
 *Clicking on a post again; 128 is getting users that participated on the post, it seems*
 
 
-![Used search to do a search for "practice final"](/content/images/2016/02/649.png)
+![Used search to do a search for "practice final"](649.png)
 *Used search to do a search for "practice final"*
 
 
-![Click on "Class Statistics" on top right](/content/images/2016/02/660.png)
+![Click on "Class Statistics" on top right](660.png)
 *Click on "Class Statistics" on top right*
 
 &nbsp;
@@ -139,4 +139,4 @@ For that purpose, the top-level abstraction I have created is the <a href="https
 A design like this, if done correctly (which I hopefully have done an okay job of here), neatly decouples any warts of Piazza's RPC API and allows the client's user API to stay untouched in case of any breaking changes to Piazza's API. The patches to these changes can be made in the "direct-ish mapping to the RPC API" in the client.
 
 The result is a client, to which there can definitely be much more work devoted, but, is a reasonably usable one:
-![](/content/images/2016/02/piazza_example.png)
+![](piazza_example.png)
