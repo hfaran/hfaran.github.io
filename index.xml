@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Hamza Faran ツ</title>
+    <link>https://hfaran.github.io/</link>
+    <description>Recent content on Hamza Faran ツ</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 10 Nov 2014 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://hfaran.github.io/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Reverse Engineering Piazza&#39;s API</title>
+      <link>https://hfaran.github.io/posts/reverse-engineering-piazzas-api/</link>
+      <pubDate>Mon, 10 Nov 2014 00:00:00 +0000</pubDate>
+      
+      <guid>https://hfaran.github.io/posts/reverse-engineering-piazzas-api/</guid>
+      <description>Motivation The private API is a myth. Piazza has an internal, i.e., private, API. This gist is a proof of that concept. It is, of course, every self-respecting snooping user&amp;rsquo;s responsibility to publicize these. piazza-api (Click for GitHub) I wrote piazza-api a while ago when it was just essentially a more formal version of alexjlockwood&amp;rsquo;s gist. About a week ago I got an email from an Associate Professor from UMD asking about piazza-api (specifically, authenticating with &amp;ldquo;Share Your Class&amp;rdquo; demo users, and additionally if I had any further knowledge of Piazza&amp;rsquo;s API).</description>
+    </item>
+    
+  </channel>
+</rss>

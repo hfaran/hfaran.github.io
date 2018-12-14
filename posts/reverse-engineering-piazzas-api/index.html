@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    
+    <title>Hamza Faran ツ  | Reverse Engineering Piazza&#39;s API</title>
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+
+    <meta name="viewport" content="width=device-width,minimum-scale=1">
+    <meta name="generator" content="Hugo 0.52" />
+    
+    
+      <META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
+    
+
+    
+    
+      <link href="/dist/css/app.955516233bcafa4d2a1c13cea63c7b50.css" rel="stylesheet">
+    
+
+    
+
+    
+      
+    
+
+    
+
+    <meta property="og:title" content="Reverse Engineering Piazza&#39;s API" />
+<meta property="og:description" content="Motivation The private API is a myth. Piazza has an internal, i.e., private, API. This gist is a proof of that concept. It is, of course, every self-respecting snooping user&rsquo;s responsibility to publicize these. piazza-api (Click for GitHub) I wrote piazza-api a while ago when it was just essentially a more formal version of alexjlockwood&rsquo;s gist. About a week ago I got an email from an Associate Professor from UMD asking about piazza-api (specifically, authenticating with &ldquo;Share Your Class&rdquo; demo users, and additionally if I had any further knowledge of Piazza&rsquo;s API)." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://hfaran.github.io/posts/reverse-engineering-piazzas-api/" /><meta property="article:published_time" content="2014-11-10T00:00:00&#43;00:00"/>
+<meta property="article:modified_time" content="2014-11-10T00:00:00&#43;00:00"/>
+
+<meta itemprop="name" content="Reverse Engineering Piazza&#39;s API">
+<meta itemprop="description" content="Motivation The private API is a myth. Piazza has an internal, i.e., private, API. This gist is a proof of that concept. It is, of course, every self-respecting snooping user&rsquo;s responsibility to publicize these. piazza-api (Click for GitHub) I wrote piazza-api a while ago when it was just essentially a more formal version of alexjlockwood&rsquo;s gist. About a week ago I got an email from an Associate Professor from UMD asking about piazza-api (specifically, authenticating with &ldquo;Share Your Class&rdquo; demo users, and additionally if I had any further knowledge of Piazza&rsquo;s API).">
+
+
+<meta itemprop="datePublished" content="2014-11-10T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2014-11-10T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="1525">
+
+
+
+<meta itemprop="keywords" content="" />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Reverse Engineering Piazza&#39;s API"/>
+<meta name="twitter:description" content="Motivation The private API is a myth. Piazza has an internal, i.e., private, API. This gist is a proof of that concept. It is, of course, every self-respecting snooping user&rsquo;s responsibility to publicize these. piazza-api (Click for GitHub) I wrote piazza-api a while ago when it was just essentially a more formal version of alexjlockwood&rsquo;s gist. About a week ago I got an email from an Associate Professor from UMD asking about piazza-api (specifically, authenticating with &ldquo;Share Your Class&rdquo; demo users, and additionally if I had any further knowledge of Piazza&rsquo;s API)."/>
+
+  </head>
+
+  <body class="ma0 avenir bg-near-white">
+
+    
+   
+  
+
+  <header>
+    <div class="bg-black">
+      <nav class="pv3 ph3 ph4-ns" role="navigation">
+  <div class="flex-l justify-between items-center center">
+    <a href="https://hfaran.github.io/" class="f3 fw2 hover-white no-underline white-90 dib">
+      Hamza Faran ツ
+    </a>
+    <div class="flex-l items-center">
+      
+      
+<div hidden>
+  <span id="new-window-0">Opens in a new window</span>
+  <span id="new-window-1">Opens an external site</span>
+  <span id="new-window-2">Opens an external site in a new window</span>
+</div>
+
+
+
+
+
+
+
+<a href="https://github.com/hfaran" target="_blank" class="link-transition github link dib z-999 pt3 pt0-l mr1" title="Github link" rel="noopener" aria-describedby="new-window-0">
+  <svg  height="32px"  style="enable-background:new 0 0 512 512;" version="1.1" viewBox="0 0 512 512" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
+  <path d="M256,32C132.3,32,32,134.8,32,261.7c0,101.5,64.2,187.5,153.2,217.9c11.2,2.1,15.3-5,15.3-11.1   c0-5.5-0.2-19.9-0.3-39.1c-62.3,13.9-75.5-30.8-75.5-30.8c-10.2-26.5-24.9-33.6-24.9-33.6c-20.3-14.3,1.5-14,1.5-14   c22.5,1.6,34.3,23.7,34.3,23.7c20,35.1,52.4,25,65.2,19.1c2-14.8,7.8-25,14.2-30.7c-49.7-5.8-102-25.5-102-113.5   c0-25.1,8.7-45.6,23-61.6c-2.3-5.8-10-29.2,2.2-60.8c0,0,18.8-6.2,61.6,23.5c17.9-5.1,37-7.6,56.1-7.7c19,0.1,38.2,2.6,56.1,7.7   c42.8-29.7,61.5-23.5,61.5-23.5c12.2,31.6,4.5,55,2.2,60.8c14.3,16.1,23,36.6,23,61.6c0,88.2-52.4,107.6-102.3,113.3   c8,7.1,15.2,21.1,15.2,42.5c0,30.7-0.3,55.5-0.3,63c0,6.1,4,13.3,15.4,11C415.9,449.1,480,363.1,480,261.7   C480,134.8,379.7,32,256,32z"/>
+</svg>
+
+<span class="new-window"><svg  height="8px"  style="enable-background:new 0 0 1000 1000;" version="1.1" viewBox="0 0 1000 1000" width="8px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
+<path d="M598 128h298v298h-86v-152l-418 418-60-60 418-418h-152v-86zM810 810v-298h86v298c0 46-40 86-86 86h-596c-48 0-86-40-86-86v-596c0-46 38-86 86-86h298v86h-298v596h596z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/>
+</svg>
+</span></a>
+
+
+
+    </div>
+  </div>
+</nav>
+
+    </div>
+  </header>
+
+
+
+    <main class="pb7" role="main">
+      
+  
+  <article class="flex-l flex-wrap justify-between mw8 center ph3 ph0-l">
+
+    <header class="mt4 w-100">
+      <p class="f6 b helvetica tracked">
+          
+        POSTS
+      </p>
+      <h1 class="f1 athelas mb1">Reverse Engineering Piazza&#39;s API</h1>
+      
+      <time class="f6 mv4 dib tracked" datetime="2014-11-10T00:00:00Z">November 10, 2014</time>      
+      
+      
+        <span class="f6 mv4 dib tracked"> - 8 minutes read</span>
+        <span class="f6 mv4 dib tracked"> - 1525 words</span>
+      
+    </header>
+
+    <main class="nested-copy-line-height lh-copy serif f4 nested-links nested-img mid-gray pr4-l w-two-thirds-l"><p><img src="/piazza/piazza_instacode.png" alt="" /></p>
+
+<p><h1></h1>
+<h1>Motivation</h1>
+<a href="http://radar.oreilly.com/2013/09/the-myth-of-the-private-api.html" target="_blank">The private API is a myth</a>. <a href="http://piazza.com" target="_blank">Piazza</a> has an internal, i.e., private, API. <a href="https://gist.github.com/alexjlockwood/6797443" target="_blank">This gist is a proof of that concept</a>. It is, of course, every self-respecting snooping user&rsquo;s responsibility to publicize these.
+<h1><a title="piazza-api (Click for GitHub)" href="https://github.com/hfaran/piazza-api" target="_blank">piazza-api (Click for GitHub)</a></h1>
+I wrote <code>piazza-api</code> a while ago when it was just essentially a more formal version of <code>alexjlockwood</code>&rsquo;s gist. About a week ago I got an email from an Associate Professor from UMD asking about <code>piazza-api</code> (specifically, authenticating with &ldquo;Share Your Class&rdquo; demo users, and additionally if I had any further knowledge of Piazza&rsquo;s API). Authenticating with demo users was easy enough (grab the cookie from the response when visiting using the anonymized URL and you&rsquo;re good to go). Of course, I had no further knowledge of Piazza&rsquo;s API, because it was &ldquo;private&rdquo;. His inquiry intrigued me, however, and I decided to investigate (because curiosity and the aforementioned responsibility).
+<h1>Capturing API Calls</h1>
+There are several ways that I could go about doing this. I could inspect the client code for API calls. I could use Chrome Dev Tools. Or I could use Fiddler (not because it&rsquo;s any better than CDT, it&rsquo;s just another option). I will be using a bit of both here. If you want to skip the Fiddler setup, simply press <em>F12</em> and open the <em>Network</em> tab if you&rsquo;re using Chrome.
+<h2>Meet <a href="http://www.telerik.com/fiddler" target="_blank">Fiddler</a></h2>
+<img src="/piazza/fiddler_diag.png" alt="Fiddler In a Nutshell" />
+<em>Fiddler In a Nutshell</em></p>
+
+<p>Fiddler is a proxy that captures all HTTP(S) requests and responses going in and out of your system. It&rsquo;s a great tool for web debugging (and in this case, reverse-engineering private APIs). There are several alternatives, such as Charles, however, Fiddler is free (and manages to be excellent at the same time). Anyways, enough praise; the point I&rsquo;m trying to make is that a tool like Fiddler makes this dead easy.</p>
+
+<p>We need to do just a bit of configuration first.
+<h3>Decrypting HTTPS Traffic</h3>
+Piazza uses HTTPS (as it rightfully should). To be a useful middleman, Fiddler needs to install a Root CA so that traffic going out and coming in can be decrypted and read. <a href="http://docs.telerik.com/fiddler/configure-fiddler/tasks/DecryptHTTPS" target="_blank">This can be painlessly configured in Fiddler Options.</a> This is a great trust exercise between you and Fiddler. Note that if you are using Chrome Dev Tools instead, this is not necessary.
+<h3>Filter Through Relevant Captures</h3>
+By default, Fiddler will log all sessions from everything and everywhere. Since we don&rsquo;t particularly care about, well, any traffic other than Piazza, <a href="http://stackoverflow.com/questions/4098877/filter-fiddler-traffic" target="_blank">let&rsquo;s filter only it through</a>.</p>
+
+<p><img src="/piazza/fiddler_filter.png" alt="Filtering through only traffic to piazza.com with 'api' in the URL seems reasonable" />
+<em>Filtering through only traffic to piazza.com with &lsquo;api&rsquo; in the URL seems reasonable</em></p>
+
+<p><h2>Generating Captures</h2>
+At this point, we can head on over to Piazza and just start clicking around to see what API calls are made. Fiddler will capture requests and show us only the filtered ones that we desire.</p>
+
+<p>The following is a capture from several clicks around the interface.</p>
+
+<p><img src="/piazza/fiddler_ex.png" alt="" /></p>
+
+<p>Let&rsquo;s break these down and map by action:</p>
+
+<p><img src="/piazza/10_92.png" alt="Logging in from home page, and forwarded to my last viewed class page" />
+<em>Logging in from home page, and forwarded to my last viewed class page</em></p>
+
+<p><img src="/piazza/99.png" alt="Clicking on a post" />
+<em>Clicking on a post</em></p>
+
+<p><img src="/piazza/105.png" alt="Clicking on &quot;Updated&quot;, i.e., filtering feed to show only what is unread by the user" />
+<em>Clicking on &ldquo;Updated&rdquo;, i.e., filtering feed to show only what is unread by the user</em></p>
+
+<p><img src="/piazza/114.png" alt="Clicking on &quot;Following&quot;, i.e., filtering through only posts that I am following" />
+<em>Clicking on &ldquo;Following&rdquo;, i.e., filtering through only posts that I am following</em></p>
+
+<p><img src="/piazza/120.png" alt="Clicking on a folder" />
+<em>Clicking on a folder</em></p>
+
+<p><img src="/piazza/128.png" alt="Clicking on a post again; 128 is getting users that participated on the post, it seems" />
+<em>Clicking on a post again; 128 is getting users that participated on the post, it seems</em></p>
+
+<p><img src="/piazza/649.png" alt="Used search to do a search for &quot;practice final&quot;" />
+<em>Used search to do a search for &ldquo;practice final&rdquo;</em></p>
+
+<p><img src="/piazza/660.png" alt="Click on &quot;Class Statistics&quot; on top right" />
+<em>Click on &ldquo;Class Statistics&rdquo; on top right</em></p>
+
+<p>&nbsp;
+<h1>Analysis</h1>
+From looking at the above requests and responses, and making a few test requests, I made the following observations:
+<ul>
+    <li>Everything is a POST (well, <strong>almost</strong>, everything).</li>
+    <li>All requests have a <em>method</em> query param, however, the request body has this as well and it&rsquo;s the one that seems to matter. That is, one can leave out the <em>method</em> query param in a request and it still works fine so long as the <em>method</em> is in the body.</li>
+    <li><em>aid</em> is another such query param, but it seems to be unnecessary. <em>aid</em> might potentially be a sort of &ldquo;referrer&rdquo; identifier? It seems to be unique for each request, but it&rsquo;s ultimately unimportant because the API still works fine without it.</li>
+    <li>All endpoints are under <code>/logic/api</code>, except for Class Statistics which are under <code>/main/api</code>; odd choice, but then again, the API design is rather odd overall (as goes for most <b>real-world</b> APIs)</li>
+    <li>Request bodies&hellip;
+<ul>
+    <li>are expected to have a <em>method</em> key</li>
+    <li>are expected to contain a <em>params key</em></li>
+    <li>&hellip; in this way, they seem to almost mirror actual function calls</li>
+    <li>&hellip; even, remote procedure calls&hellip;</li>
+</ul>
+</li>
+</ul>
+What if this is a <a href="http://en.wikipedia.org/wiki/JSON-RPC">JSON-RPC</a> API? :O</p>
+
+<p>Looking at the wikipedia page for JSON-RPC, everything we&rsquo;ve seen so far maps well to JSON-RPC. Although, it only seems to be <em>JSON-RPC-ish</em>, much like most so-called REST APIs that only take a few common elements from REST&rsquo;s design.
+<h2>Closer Request Inspection</h2>
+<h3><em>/logic/api </em>Methods</h3>
+<pre><strong>method</strong>: <em>network.get_users</em>
+<strong>params</strong>:
+    <em>ids ([string,&hellip; ])</em>: List of user IDs
+    <em>nid (string)</em>: ID of class
+</pre>
+This method seems simple enough; give it a list a students IDs and it returns information on those students; mostly harmless stuff in here.
+<pre><strong>method</strong>: <em>network.get_my_feed</em>
+<strong>params</strong>:
+    <em>limit (number)</em>: Number of posts from feed to get
+    <em>nid (string)</em>: ID of class
+    <em>offset (number)</em>: The offset from which to start retrieving feed posts
+    <em>sort (string)</em>: Most probably how to sort the feed retrieved; only seen as &ldquo;updated&rdquo; so far</pre>
+This method seems to retrieve the &ldquo;feed&rdquo; you see as student when logged in to the home page; contains different data from <em>content.get</em>.
+<pre><strong>method</strong>: <em>content.get</em>
+<strong>params</strong>:
+    <em>cid (string)</em>: ID of the post to retrieve
+    <em>nid (string)</em>: ID of the class</pre>
+This is the one that gets the whole post (as it is needed only when one actually clicks on the whole post to see it).
+<pre><strong>method</strong>: <em>network.filter_feed</em>
+<strong>params</strong>:
+    <em>nid (string)</em>: ID of the class
+    <em>sort (string)</em>: Most probably how to sort the feed retrieved; only seen as &ldquo;updated&rdquo; so far
+    <em>updated (number)</em>: Most likely a boolean flag, i.e., set to <em>1</em> to filter feed with only posts to see that have updated since last viewed by you
+    <em>following (number)</em>: Same as &ldquo;updated&rdquo; above; set this to <em>1</em> to filter through only posts that you are following
+    <em>folder (number)</em>: Same as the above flags; set to <em>1 </em> to filter feed so that it shows posts from only a single folder
+    <em>filter_folder (string)</em>: Name of the folder you wish to show posts from</pre>
+This method seems to return the same results as <em>network.get_my_feed </em>except for, you guessed it, you can specify the additional filters of <em>updated </em>or <em>following </em>that map to clicking <em>Updated</em> or <em>Following </em>on the web UI. Additionally, you can provide the <em>folder</em> filter as well.
+<pre><strong>method: </strong><em>network.search</em>
+<strong>params:
+</strong>    <em>nid (string)</em>: ID of the class
+    <em>query (string)</em>: The search query</pre>
+This method is similar to <i>network.filter_feed </i>in the content of its results, except in this case, the filter is the search query.
+<pre><strong>method: </strong><em>user_profile.get_profile</em></pre>
+Gets the current user&rsquo;s profile; no params seen.
+<h3> <em>/main/api</em> Methods</h3>
+<pre><strong>method:</strong> <em>network.get_stats
+</em><strong>params:
+</strong>    <em>nid (string): </em>ID of the class
+    <em>anonymize: Was set to &ldquo;False&rdquo; when performing request from UI; mostly likely can be set to &ldquo;True&rdquo; to anonymize some results from the request</em></pre>
+Triggered by clicking &ldquo;Statistics&rdquo; in the top bar; returns the statistics you&rsquo;d expect to generate the page, including the graph on the page as well.
+<h3>&hellip; And More?</h3>
+There are most likely many more methods available in the API, such as for post creation and different methods for instructors; however, for the sake of brevity of this post, I am not going to investigate and document everything and simply go with what I have learned thus far and translate that into a usable Python client for the API.
+<h1>Making a (Somewhat Sane) Piazza Client</h1>
+Now comes the time to translate this into a somewhat usable client. Piazza&rsquo;s API itself is <em>okay</em>, but doesn&rsquo;t come across as one with the most usable design and perhaps one we don&rsquo;t want to mirror in the design of the client.</p>
+
+<p>Our client&rsquo;s API ideally needs to have a better abstraction on top of Piazza&rsquo;s JSON-RPC API than the RPC API itself. However, our client still needs to have a mapping close to the RPC API itself so that we can easily patch it for any future changes to Piazza&rsquo;s API.</p>
+
+<p>The solution to this is simple; as a base layer, we create <a href="https://github.com/hfaran/piazza-api/blob/master/piazza_api/rpc.py">a direct-ish mapping to the RPC API</a>. And on top of that, we build additional abstractions with a more usable and pleasant design.</p>
+
+<p>For that purpose, the top-level abstraction I have created is the <a href="https://github.com/hfaran/piazza-api/blob/master/piazza_api/piazza.py">Piazza class</a>. With this, you can log in, view your user profile, and do one more thing, which is create a  <a href="https://github.com/hfaran/piazza-api/blob/master/piazza_api/network.py">Network instance</a>. <em>Network</em> contains the rest of the methods and are methods that <strong>concern particular networks, i.e., classes. </strong></p>
+
+<p>A design like this, if done correctly (which I hopefully have done an okay job of here), neatly decouples any warts of Piazza&rsquo;s RPC API and allows the client&rsquo;s user API to stay untouched in case of any breaking changes to Piazza&rsquo;s API. The patches to these changes can be made in the &ldquo;direct-ish mapping to the RPC API&rdquo; in the client.</p>
+
+<p>The result is a client, to which there can definitely be much more work devoted, but, is a reasonably usable one:
+<img src="/piazza/piazza_example.png" alt="" /></p>
+<ul class="pa0">
+  
+</ul>
+<div class="mt6">
+        
+      </div>
+    </main>
+
+    <aside class="w-30-l mt6-l">
+
+
+
+
+</aside>
+
+  </article>
+
+    </main>
+    <footer class="bg-black bottom-0 w-100 pa3" role="contentinfo">
+  <div class="flex justify-between">
+  <a class="f4 fw4 hover-white no-underline white-70 dn dib-ns pv2 ph3" href="https://hfaran.github.io/" >
+    &copy; 2018 Hamza Faran ツ
+  </a>
+    <div>
+<div hidden>
+  <span id="new-window-0">Opens in a new window</span>
+  <span id="new-window-1">Opens an external site</span>
+  <span id="new-window-2">Opens an external site in a new window</span>
+</div>
+
+
+
+
+
+
+
+<a href="https://github.com/hfaran" target="_blank" class="link-transition github link dib z-999 pt3 pt0-l mr1" title="Github link" rel="noopener" aria-describedby="new-window-0">
+  <svg  height="32px"  style="enable-background:new 0 0 512 512;" version="1.1" viewBox="0 0 512 512" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
+  <path d="M256,32C132.3,32,32,134.8,32,261.7c0,101.5,64.2,187.5,153.2,217.9c11.2,2.1,15.3-5,15.3-11.1   c0-5.5-0.2-19.9-0.3-39.1c-62.3,13.9-75.5-30.8-75.5-30.8c-10.2-26.5-24.9-33.6-24.9-33.6c-20.3-14.3,1.5-14,1.5-14   c22.5,1.6,34.3,23.7,34.3,23.7c20,35.1,52.4,25,65.2,19.1c2-14.8,7.8-25,14.2-30.7c-49.7-5.8-102-25.5-102-113.5   c0-25.1,8.7-45.6,23-61.6c-2.3-5.8-10-29.2,2.2-60.8c0,0,18.8-6.2,61.6,23.5c17.9-5.1,37-7.6,56.1-7.7c19,0.1,38.2,2.6,56.1,7.7   c42.8-29.7,61.5-23.5,61.5-23.5c12.2,31.6,4.5,55,2.2,60.8c14.3,16.1,23,36.6,23,61.6c0,88.2-52.4,107.6-102.3,113.3   c8,7.1,15.2,21.1,15.2,42.5c0,30.7-0.3,55.5-0.3,63c0,6.1,4,13.3,15.4,11C415.9,449.1,480,363.1,480,261.7   C480,134.8,379.7,32,256,32z"/>
+</svg>
+
+<span class="new-window"><svg  height="8px"  style="enable-background:new 0 0 1000 1000;" version="1.1" viewBox="0 0 1000 1000" width="8px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
+<path d="M598 128h298v298h-86v-152l-418 418-60-60 418-418h-152v-86zM810 810v-298h86v298c0 46-40 86-86 86h-596c-48 0-86-40-86-86v-596c0-46 38-86 86-86h298v86h-298v596h596z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/>
+</svg>
+</span></a>
+
+
+</div>
+  </div>
+</footer>
+
+    
+
+  <script src="/dist/js/app.3fc0f988d21662902933.js"></script>
+
+
+  </body>
+</html>
