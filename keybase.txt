@@ -1,0 +1,81 @@
+==================================================================
+https://keybase.io/hfaran
+--------------------------------------------------------------------
+
+I hereby claim:
+
+  * I am an admin of https://hfaran.me
+  * I am hfaran (https://keybase.io/hfaran) on keybase.
+  * I have a public key with fingerprint 63AA 2552 3724 E9D7 8184  EADA 1ACD E23E 8B14 A872
+
+To do so, I am signing this object:
+
+{
+  "body": {
+    "key": {
+      "eldest_kid": "01011b00c8cf80965d47146033ff965981c0400b2a1c0aab04faf06cffb4a338c5600a",
+      "fingerprint": "63aa25523724e9d78184eada1acde23e8b14a872",
+      "host": "keybase.io",
+      "key_id": "1acde23e8b14a872",
+      "kid": "01011b00c8cf80965d47146033ff965981c0400b2a1c0aab04faf06cffb4a338c5600a",
+      "uid": "225c05d44560d44b12e14eb1970e4419",
+      "username": "hfaran"
+    },
+    "merkle_root": {
+      "ctime": 1630666590,
+      "hash_meta": "1c2353c68e76ac6aab835f6f5871befd4b7f6e9de99ef714e56378e1570c8a5f",
+      "seqno": 20692508
+    },
+    "revoke": {
+      "sig_ids": [
+        "122f5b223f9604662a4f0ccd74ee572e70dd941e43d241c3a5babe9df11e5a0f0f"
+      ]
+    },
+    "service": {
+      "hostname": "hfaran.me",
+      "protocol": "https:"
+    },
+    "type": "web_service_binding",
+    "version": 1
+  },
+  "ctime": 1630666592,
+  "expire_in": 157680000,
+  "prev": "8f193fbccd6742d1a28c7f467ba5c71cd4f7558a3c37e29f65ce177fdc209eb9",
+  "seqno": 12,
+  "tag": "signature"
+}
+
+which yields the signature:
+
+-----BEGIN PGP MESSAGE-----
+Version: Keybase OpenPGP v2.1.13
+Comment: https://keybase.io/crypto
+
+yMK2AnicrVNdbBVFGL1XtMYqFPHBUJIG1wbFNjgzOz+71xhiEAxGNKIPQguXmdlv
+7t209+7t7t5ihWsaFEmND/5UFAk2aigQMEGiifrSSnggNaikPEBJ8A/QGKJEq2/m
+OttojMZH92F25sv5znfO2Z0T8+flWvM7R0e92XUv781/ejyu5yRubtnmqCgYcgrb
+nD6Ye0F/AEla7AsDp+AgjDBWCGlPGw/5nAVUYMqR6xpjT76HNaIIKSLtRkqFqJEG
+cW2MotJ1Pc04QtLpdkxYLUFci8Nqamm5KyVhjLiCUPAD4WGPggwkljoA4oKnMJWe
+ILaxHCVZhxWnZAIrwsjW7KE4J+8/8P+z7vocHSFMI8tBbdmuChPAFBT2BQJKsZ8B
+E4irsgIWXTYyllWn0e1UIO7rh2IcRWkWrU7DDIC5izi3KpC1J5NysQKpzNxo4jJX
+cw8El5pbWZ7LDDfME1iBCagShtu4wPfBWDvAuCs8wExYn5IZqyKBgWrkFAjiPmHI
+sxJiGIz6IJuehCWbWuIUehxMiGGKENeGgSjnRFKDtA4EBWCCgEBB4FMM1A0IxdqV
+TEllJxuMgUlkkHE2NbJp8WCo58izz/QP+yvsvtupxVEa6ag/K6dpLSlkqaRDtQy3
+FVTxT4aiCquB/UNsxyDESRhVbUoW+e/ASLcDT9bCGIphhmCCe8g+2RwYtJSewb5r
+lHXCBSUBlsTTwlAulGRaYB1QIxjzpKtdAcQ3nGnAQphAE+SD8v9OENtRqSxZThtb
+Vab1GJzG8cnea3P51lzLdddkVyfXesPCvy7UhH99c+AM3jsyPjRc+ODAT8fatj/1
+0Q6vPLp77M0Xm+9OXXru9QW/L2k5OTB1EAc9719tPFL7qnxldWNk/8ie+3tn2roO
+OLvK5xYfWjo98sVnvz3+a+Pb5Vc+ufvkN5VXeufnL+V2526aeWdyeuyHoz+37Hnj
+1Nk7Nm14YGp2/dJblnS+Ny/+ccfEPdNnn7nv0LOnS78sbvvO+fDE7WNPbB5+cNWN
+21svv1RovnX4a/1l6fMLN9+2ptm+ob2r59ZlE/snl7eXXnv60YXnOzu20sv0hQX1
+jiM7O9Z2nSYzF6fP7Bs+smxL/bGPV69ddDh8+KHxCzPrO+uieefFNQfzK2fHnh9/
++/t7jxUr7rl1V+9auev8qxtXnfoDSayBVQ==
+=zt9n
+-----END PGP MESSAGE-----
+
+And finally, I am proving ownership of this host by posting or
+appending to this document.
+
+View my publicly-auditable identity here: https://keybase.io/hfaran
+
+==================================================================
